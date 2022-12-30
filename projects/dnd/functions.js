@@ -8,7 +8,7 @@
  Пример:
    addListener('click', document.querySelector('a'), () => console.log('...')) // должна добавить указанный обработчик кликов на указанный элемент
  */
-function addListener(eventName, target, fn) {}
+function addListener(eventName, target, fn) {jhgjhg}
 
 /*
  Задание 2:
