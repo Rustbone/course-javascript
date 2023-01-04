@@ -21,27 +21,26 @@ function init() {
     const coords = mapEvent.get('coords');
     myMap.balloon.open(coords, formTemplate)
 
-    setTimeout(() => {
-      document.querySelector('#add-form').addEventListener('submit', function (e) {
-        e.preventDefault()
-        const review = {
-          coords: mapEvent.get('coords'),
-          author: this.elements.author.value,
-          place: this.elements.place.value,
-          reviewText: this.elements.review.value,
-        }
-
-        addReview(review);
-        getGeoObjects();
-        myMap.balloon.close();
-      })
-    }, 0);
+    delayAddReviewSubmit(myMap, mapEvent)
+    
   })
 
   clusterer = new ymaps.Clusterer({
     clusterDisableClickZoom: true,
     gridSize: 512
   });
+
+  clusterer.events.add('click', function(clusterEvent) {
+    const geoObjectsInCluster = clusterEvent.get('target').getGeoObjects()
+
+    const content = ymaps.templateLayoutFactory.createClass(
+      `<div class="reviews">${getReviewList(geoObjectsInCluster)}</div>` + formTemplate
+    )
+
+    clusterEvent.get('target').options.set({ clusterBalloonContentLayout: content })
+
+    delayAddReviewSubmit(clusterEvent.get('target'), clusterEvent)
+  })
 
   getGeoObjects();
 }
@@ -56,6 +55,8 @@ function getGeoObjects() {
 
     placemark.events.add('click', placemarkEv => {
       placemarkEv.stopPropagation();
+      delayAddReviewSubmit(placemark, placemarkEv)
+      
     })
 
     geoObjects.push(placemark)
@@ -73,5 +74,33 @@ function getReviewList(currentGeoObjects, isCoords) {
   if (isCoords) {
     const review = getReviews().find(rev => JSON.stringify(rev.coords) === JSON.stringify(currentGeoObjects))
     reviewListHTML += reviewTemplate(review)
+  } else {
+    for (const review of getReviews()) {
+      if (currentGeoObjects.find(geoObject => {
+        return JSON.stringify(review.coords) === JSON.stringify(geoObject.geometry._coordinates)
+      })) {
+        reviewListHTML += reviewTemplate(review)
+      }
+    }
   }
+
+  return reviewListHTML;
+}
+
+function delayAddReviewSubmit(geoObject, geoObjectEvent) {
+  setTimeout(() => {
+    document.querySelector('#add-form').addEventListener('submit', function (e) {
+      e.preventDefault()
+      const review = {
+        coords: geoObjectEvent.get('coords'),
+        author: this.elements.author.value,
+        place: this.elements.place.value,
+        reviewText: this.elements.review.value,
+      }
+
+      addReview(review);
+      getGeoObjects();
+      geoObject.balloon.close();
+    })
+  }, 0);
 }
