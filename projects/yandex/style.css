@@ -1,0 +1,29 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+input {
+  width: 310px;
+  height: 38px;
+
+  background: #FFFFFF;
+  border: 1px solid #CFCFCF;
+  border-radius: 3px;
+}
+
+textarea {
+  width: 310px;
+  background: #FFFFFF;
+  border: 1px solid #CFCFCF;
+  border-radius: 3px;
+}
+
+button {
+  color: #FFFFFF;
+  width: 107px;
+  height: 38px;
+  background: #FF8663;
+  border-radius: 3px;
+  border: 1px solid transparent;
+}
