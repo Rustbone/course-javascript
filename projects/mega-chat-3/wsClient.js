@@ -2,6 +2,7 @@ export default class WSClient {
   constructor(url, onMessage) {
     this.url = url;
     this.onMessage = onMessage;
+    console.log(this.url);
   }
 
   connect() {

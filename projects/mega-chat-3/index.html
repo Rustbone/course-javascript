@@ -15,10 +15,26 @@
         display: flex;
     }
 
+    h2 {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 500;
+        font-size: 24;
+        color: #FFFFFF;
+    }
+
+    .intro {
+        font-family: Arial, Helvetica, sans-serif;
+        color: #7F91A4;
+        font-weight: 400;
+        font-size: 16;
+        max-width: 330px;
+        text-align: center;
+    }
+
     .left-side {
         flex-grow: 1;
         max-width: 320px;
-        background: linear-gradient(to bottom, #f19b6d, #EB8665);
+        background: #17212B;
         color: #FEFEFD;
         padding: 10px;
         box-sizing: border-box;
@@ -33,6 +49,7 @@
     .user-name {
         font-size: 18px;
         font-weight: bold;
+        color: #5387C1
     }
 
     .user-photo, .message-item-photo {
@@ -58,11 +75,13 @@
         flex-grow: 1;
         flex-direction: column;
         padding: 10px;
+        background: #17212B;
     }
 
     .messages-container {
         flex-grow: 1;
-        overflow: scroll;
+        overflow: auto;
+        background: #0E1621;
     }
 
     .input-container {
@@ -74,20 +93,26 @@
     .message-input {
         height: 30px;
         flex-grow: 1;
+        color: #5B6774;
+        background: #17212B;
+        border: 0;
         margin: 0 10px 0 0;
     }
 
     .send-button {
-        height: 25px;
+        height: 28px;
+        width: 112px;
+        color: #FFFFFF;
+        background: #5387C1;
+        border-radius: 5px;
     }
 
     #login {
         position: absolute;
         top: 20vh;
-        width: 500px;
-        height: 300px;
-        background: linear-gradient(to bottom, #f19b6d, #EB8665);
-        border-radius: 10px;
+        width: 497px;
+        height: 452px;
+        background: #17212B;
         box-shadow: 0 0 10px #7f7f7f;
         display: flex;
         flex-direction: column;
@@ -106,15 +131,51 @@
         font-size: 16px;
         height: 30px;
         width: 100%;
+        background: #17212B;
+        border: 0;
+        color: #FFFFFF;
     }
 
     .login-submit {
-        height: 30px;
-        width: 100px;
+        height: 43px;
+        width: 132px;
+        background: #5188C1;
+        border-radius: 5px;
+        color: #FFFFFF;
+        text-transform: uppercase;
+    }
+
+    .wrapper {
+        display: inline-block;
+        width: 139px;
+        height: 139px;
+        position: relative;
+        background: #232F3D;;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    .vector {
+        width: 85px;
+        height: 65px;
+        position: absolute;
+        transform: translate(25%, 25%);
+        fill: #5188C0;
     }
 
     .message-item {
         display: flex;
+    }
+    
+    .messages-header {
+        color: #FFFFFF;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14;
+        font-weight: 300;
+    }
+
+    .message-item-text {
+        color:#FFFFFF;
     }
 
     .message-item-system {
@@ -147,8 +208,13 @@
 </style>
 <div id="app">
     <div id="login" class="hidden">
+        <svg class="wrapper" viewBox="0 0 85 65">
+            <use src="./Img/vector.svg" width="85" height="65" class="vector"></use>
+        </svg>
+        <h2>Авторизация</h2>
+        <div class="intro">Введите пожалуйста свой ник для дальнейшей авторизации</div>
         <div class="login-field">
-            <input type="text" class="login-name-input" data-role="login-name-input" placeholder="никнейм">
+            <input type="text" class="login-name-input" data-role="login-name-input" placeholder="Введите свой ник">
         </div>
         <div class="login-field">
             <button class="login-submit" data-role="login-submit">Войти</button>
@@ -173,9 +239,10 @@
             </div>
         </div>
         <div class="right-side">
+            <div class="messages-header">Чат</div>
             <div class="messages-container" data-role="messages-list"></div>
             <div class="input-container" data-role="message-sender">
-                <input class="message-input" data-role="message-input" type="text" placeholder="сообщение"/>
+                <input class="message-input" data-role="message-input" type="text" placeholder="Введите сообщение"/>
                 <button class="send-button" data-role="message-send-button">Отправить</button>
             </div>
         </div>

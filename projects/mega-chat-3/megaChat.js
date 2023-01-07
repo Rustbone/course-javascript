@@ -10,7 +10,7 @@ import WSClient from './wsClient';
 export default class MegaChat {
   constructor() {
     this.wsClient = new WSClient(
-      `ws://${location.host}/mega-chat-3/ws`,
+      `ws://localhost:8282/mega-chat-3/ws`,
       this.onMessage.bind(this)
     );
 
@@ -39,7 +39,7 @@ export default class MegaChat {
   onUpload(data) {
     this.ui.userPhoto.set(data);
 
-    fetch('/mega-chat-3/upload-photo', {
+    fetch('http://localhost:8282/mega-chat-3/upload-photo', {
       method: 'post',
       body: JSON.stringify({
         name: this.ui.userName.get(),
@@ -59,7 +59,9 @@ export default class MegaChat {
     this.ui.loginWindow.hide();
     this.ui.mainWindow.show();
     this.ui.userName.set(name);
-    this.ui.userPhoto.set(`/mega-chat-3/photos/${name}.png?t=${Date.now()}`);
+    this.ui.userPhoto.set(
+      `http://localhost:8282/mega-chat-3/photos/${name}.png?t=${Date.now()}`
+    );
   }
 
   onMessage({ type, from, data }) {
@@ -83,7 +85,7 @@ export default class MegaChat {
       );
 
       for (const avatar of avatars) {
-        avatar.style.backgroundImage = `url(/mega-chat-3/photos/${
+        avatar.style.backgroundImage = `url(http://localhost:8282/mega-chat-3/photos/${
           data.name
         }.png?t=${Date.now()})`;
       }
